@@ -33,7 +33,7 @@ def player_picks_square(b)
     position = gets.chomp.to_i
     puts "Please select a valid position!\n\n" if valid_position?(position,b) == false
   end until valid_position?(position, b)
-b
+
   b[position] = "X"
 end
 
@@ -43,26 +43,27 @@ def computer_picks_square(b)
   else
     position = empty_positions(b).sample
   end
-  binding.pry
   b[position] = "O"
 end
 
+
 def two_x_in_a_row(b)
-  in_a_row, position = 0
+  x_in_a_row, position = 0
 
   WINNING_LINES.each do |line|
-    in_a_row, position = 0
+    # Re-initialize count and position for each winning line.
+    x_in_a_row, position = 0
+
     # Return position of blank if winning line contains two "X" and one " "
     line.each do |p|
       if b[p] == "O"
         in_a_row = 0
         break
       end
-      in_a_row += 1 if b[p] == "X"
+      x_in_a_row += 1 if b[p] == "X"
       position = p if b[p] == " "
-
     end
-    return position if in_a_row == 2
+    return position if x_in_a_row == 2
   end
 
   return nil
